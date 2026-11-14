@@ -1,0 +1,147 @@
+{
+ "kit_version": "1.0",
+ "started_utc": "2026-11-14T16:19:38+00:00",
+ "argv": [
+  "--blind-search",
+  "--restart"
+ ],
+ "stages": {
+  "F": {
+   "seed_range": [
+    0,
+    4294967296
+   ],
+   "full_32_bit_range": true,
+   "finished": true,
+   "next_seed": 4294967296,
+   "layouts": [
+    270336,
+    303104,
+    311296,
+    221184,
+    294912,
+    73728
+   ],
+   "native_T_of_this_device": 73728,
+   "offsets_searched": [
+    0
+   ],
+   "sigma_estimated_from_data": 0.005983714248610945,
+   "probe_values": 32,
+   "probe_rows": [
+    128982,
+    128983,
+    128984,
+    128985
+   ],
+   "heldout_rows": 32,
+   "heldout_values": 131072,
+   "tolerance": 0.02,
+   "backend": "torch",
+   "device": "cuda",
+   "device_name": "NVIDIA GB10",
+   "batch": 16777216,
+   "seconds_this_run": 250.58,
+   "seconds_total": 250.58,
+   "seed_layouts_per_second_this_run": 102840047.96851756,
+   "confirmed": [
+    {
+     "seed": 953049583,
+     "T": 303104,
+     "probe_values_passed": 32,
+     "heldout_r": 0.9999986289336464,
+     "probe_cosine": 0.9999985519064377
+    }
+   ],
+   "seed_layouts_matching_first_probe_value": 95329,
+   "note_on_first_probe_value": "wrong seeds match the first probe value by chance a few times per million; they then fail the next ones",
+   "runner_up": {
+    "seed": 3778939901,
+    "T": 294912,
+    "probe_values_passed": 2,
+    "heldout_r": -0.0046080342437291736,
+    "probe_cosine": 0.24354751467177663
+   },
+   "best_other_candidates": [
+    {
+     "seed": 3067906987,
+     "T": 270336,
+     "probe_values_passed": 2,
+     "heldout_r": -0.000540606977952937,
+     "probe_cosine": 0.21295241128803943
+    },
+    {
+     "seed": 3778939901,
+     "T": 294912,
+     "probe_values_passed": 2,
+     "heldout_r": -0.0046080342437291736,
+     "probe_cosine": 0.24354751467177663
+    },
+    {
+     "seed": 123793,
+     "T": 270336,
+     "probe_values_passed": 1,
+     "heldout_r": 0.0021878006852436797,
+     "probe_cosine": 0.2510323549351824
+    },
+    {
+     "seed": 321004,
+     "T": 270336,
+     "probe_values_passed": 1,
+     "heldout_r": -0.002693211844137619,
+     "probe_cosine": -0.04943926418434135
+    },
+    {
+     "seed": 365070,
+     "T": 270336,
+     "probe_values_passed": 1,
+     "heldout_r": 0.007530810752303716,
+     "probe_cosine": 0.2596245826966564
+    }
+   ],
+   "checkpoint_file": "blind_search_checkpoint.json",
+   "caveat": "the search is told neither seed nor layout, but the bundled rows were chosen by the reviewer, who knew which rows are untouched; and only generator offset 0 is searched",
+   "status": "PASS",
+   "recovered": {
+    "seed": 953049583,
+    "T": 303104,
+    "sms_if_2048_threads_each": 148.0,
+    "heldout_r": 0.9999986289336464
+   },
+   "equals_published_claim_seed_953049583_T_303104": true,
+   "seconds": 251.02
+  }
+ },
+ "device_facts": {
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "machine": "aarch64",
+  "platform": "Linux-7.0.0-1025-nvidia-aarch64-with-glibc2.39",
+  "torch": "2.14.1+cu130",
+  "torch_cuda_build": "13.0",
+  "cuda_available": true,
+  "arch_list": [
+   "sm_80",
+   "sm_90",
+   "sm_100",
+   "sm_110",
+   "sm_120"
+  ],
+  "device_count": 1,
+  "device_index": 0,
+  "device_name": "NVIDIA GB10",
+  "compute_capability": "12.1",
+  "multi_processor_count": 48,
+  "max_threads_per_multi_processor": 1536,
+  "warp_size": 32,
+  "is_integrated": true,
+  "total_memory_bytes": 130661003264,
+  "how_obtained": "torch.cuda.get_device_properties(0); max threads per SM is read from the max_threads_per_multi_processor attribute when this torch build exposes it, otherwise it is inferred in stage C as T_found / (256 * multi_processor_count)",
+  "warnings": [],
+  "predicted_full_grid_threads": 73728,
+  "formula": "grid.x = min(multiProcessorCount * (maxThreadsPerMultiProcessor / 256), ceil(numel / 256)); block = 256; T = 256 * grid.x; element i is written by thread i % T (Philox subsequence = thread index), lane (i // T) % 4 of curand_normal4 call number (i // T) // 4 (Philox counter = generator_offset/4 + call)",
+  "formula_source": "pytorch/pytorch aten/src/ATen/native/cuda/DistributionTemplates.h, calc_execution_policy() and distribution_elementwise_grid_stride_kernel(); read at main 0a95a45a42fbec1ab15a5c8ad9b6f03ac2e225ef (2026-11-12); same grid formula in v1.3.0, v1.8.0, v2.0.0, v2.5.0, v2.9.0",
+  "status": "PASS"
+ },
+ "finished_utc": "2026-11-14T16:23:49+00:00"
+}

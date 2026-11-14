@@ -1,0 +1,54 @@
+Source commit: e45ce07885c248147bc4bf8313e788aed7dc947f
+Results branch: results/spark-20261114
+Checkout: /home/agent-codex/weights-magic/blackwell-fingerprint-check
+
+Setup and deviations from ASTRA_PROMPT.md:
+- The initial sandbox could neither resolve github.com nor access the NVIDIA GPU.
+  Host execution with approved sandbox escalation provided network and GPU access.
+- The first host clone failed because Git could not read a GitHub username.
+  Work stopped as instructed. The user subsequently explicitly requested fixing Git
+  or GitHub on the Spark and pulling down the repository.
+- GitHub CLI was already authenticated as piotr-kula, with HTTPS Git protocol.
+  Running gh auth setup-git --hostname github.com connected Git to the existing
+  GitHub CLI credential helper in /home/agent-codex/.gitconfig. No new credentials
+  were created. git ls-remote and git clone then succeeded.
+- The repository was cloned inside the current writable workspace, rather than
+  directly under the home directory.
+- System Python had no torch module. A clean .venv was created in this repository.
+  NumPy and CUDA PyTorch were installed using the prescribed cu130 index; no
+  fallback index or Docker container was needed. Package versions and install
+  output are preserved in results/.
+- TMPDIR, PIP_CACHE_DIR, XDG_CACHE_HOME and CUDA_CACHE_PATH were redirected to
+  repository-local directories as applicable. PYTHONDONTWRITEBYTECODE=1 was set
+  during tests. Only results/ is to be committed.
+- Commands used .venv/bin/python explicitly instead of activating the environment.
+- Exit codes were also appended to the short blind-search log.
+- Git had no configured author name or email. The results commit uses per-command
+  author settings based on the authenticated GitHub profile: Piotr Kula,
+  261033582+piotr-kula@users.noreply.github.com. No global author setting is changed.
+
+The test script and data files were not edited. No device simulation, GPU setting
+changes, system package installation, model downloads, or Hugging Face credentials
+were used. No pull request, issue, or release is part of this task.
+
+Main command:
+.venv/bin/python spark_check.py
+
+Blind slice command:
+.venv/bin/python spark_check.py --blind-search --seed-range 952000000:954097152 --restart --out results_blind_slice.json
+
+Full blind-search command:
+.venv/bin/python spark_check.py --blind-search --restart
+
+The short slice printed a full-search estimate of 0:05:21, below the specified
+three-hour limit, so the full search was started.
+
+Completion:
+- Main test: exit code 0; A, B, C, C+, D and E printed PASS.
+- Blind slice: exit code 0; F printed PASS.
+- Full blind search: exit code 0; F printed PASS; finished=true,
+  full_32_bit_range=true, next_seed=4294967296. Search wall time was 250.58 s;
+  the complete stage, including setup and confirmation, recorded 251.02 s.
+- No --skip-large rerun was required. No test step remained blocked.
+- git diff --exit-code confirmed spark_check.py and data/ unchanged against
+  the source commit before committing the results.

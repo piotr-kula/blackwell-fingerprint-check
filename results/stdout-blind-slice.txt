@@ -1,0 +1,17 @@
+
+=== Stage F (optional): blind recovery of seed and thread count from the bundled rows ===
+  torch 2.14.1+cu130 (CUDA build 13.0), NVIDIA GB10, compute capability 12.1, 48 SMs, max threads per SM: 1536
+  PyTorch formula predicts T = 48 x (1536 // 256) x 256 = 73,728
+  input: 36 bundled rows x 4096; scale estimated from the data: sigma = 0.00598371
+  probe: 32 largest-magnitude values of the first 4 rows; held-out for confirmation: the other 32 rows (131,072 values)
+  candidate thread counts: 270,336, 303,104, 311,296, 221,184, 294,912, 73,728 (native T of this device: 73,728)
+  seeds 952,000,000 .. 954,097,151 (2,097,152 seeds x 6 layouts), generator offset 0 only; backend torch on cuda, batch 16,777,216
+  >>> seed 953,049,583 at T = 303,104 matches all 32 probe values (confirmation on held-out rows follows at the end)
+  progress 100.00%  next seed 954,097,152     80.38 M seed-layouts/s  ETA 0:00:00  matched 1st probe value: 50  matched all 32: 1
+  RECOVERED seed = 953,049,583, T = 303,104 (= 148 SMs x 2048): held-out r = 0.999999 on 131,072 values not used by the search; equals the published claim: True
+  runner-up: seed 952,673,477 at T = 270,336 passed 1 of 32 probe values, probe cosine +0.124, held-out r = -0.00502
+  throughput this run: 80.26 million seed-layout evaluations per second on torch/cuda (2,097,152 seeds x 6 layouts in 0.2 s)
+  at this rate a full 2**32 sweep of 6 layouts takes about 0:05:21 (h:mm:ss)
+[F] PASS: blind seed recovery
+  results written to results_blind_slice.json
+exit code: 0

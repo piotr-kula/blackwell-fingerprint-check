@@ -1,0 +1,54 @@
+====================================================================================================
+SIMULATED DEVICE: stages C-E run against the emulator itself. THIS IS A CODE SELF-TEST, NOT A HARDWARE RESULT.
+====================================================================================================
+
+=== Stage A: CPU self-test (no GPU involved) ===
+  Philox4x32-10 known-answer vectors (Random123): ok
+  row sample: 36 rows x 4096 of embed.weight from https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash @ 60d8d70770 (sha256 ok)
+  claimed: seed 953049583, T=303,104 (148 SMs x 2048)  rows r>0.99: 36/36  median r +0.999999  -> ok
+  T=270,336 (132 x 2048)                               rows r>0.99:  0/36  median r -0.008620  -> ok
+  T=311,296 (152 x 2048)                               rows r>0.99:  0/36  median r +0.000166  -> ok
+  seed+1                                               rows r>0.99:  0/36  median r +0.001199  -> ok
+  seed-1                                               rows r>0.99:  0/36  median r -0.002534  -> ok
+  bf16 bit agreement with correctly rounded math: 147416/147456 (99.9729%), 40 differing -> ok
+[A] PASS: CPU self-test (no GPU involved)
+
+=== Stage B: device facts ===
+[B] SKIPPED: torch is not installed (No module named 'torch')
+
+=== Stage C: mechanism test with stock PyTorch on this GPU ===
+  sweep of T = 256*g, g = 1..2600, on 16343 values beyond element 700,000: best T = 73,728 (g = 288) r = 1.000000; runner-up T = 210,688 r = +0.0238 -> unique
+  formula check: SM count unknown (simulated device); skipped
+  float32 bit agreement with correctly rounded emulator (fused v): 4,000,000/4,000,000 identical (100.0000%), within 1 ulp 100.0000%, r = 1.000000000
+  float32 bit agreement with correctly rounded emulator (unfused v): 3,979,126/4,000,000 identical (99.4781%), within 1 ulp 99.7918%, r = 1.000000000
+  native output vs 132 SMs x 2048 (T = 270,336): r = -0.0091 -> no match
+  native output vs 148 SMs x 2048 (T = 303,104): r = -0.0010 -> no match
+  native output vs 152 SMs x 2048 (T = 311,296): r = -0.0015 -> no match
+  bfloat16: identical to this device's float32 fill rounded to bfloat16: 100.00000%; identical to emulator at samples: 100.000% -> ok
+  float16: identical to this device's float32 fill rounded to float16: 100.00000%; identical to emulator at samples: 100.000% -> ok
+  normal_(0, 0.006) equals float32(z * float32(0.006)) for 100.00000% of values -> ok
+  2-D tensor (977, 4096): r = 1.000000000 with index = row * width + column -> ok
+  small tensor numel = 10,000: T_effective = 10,240, r = 1.000000000 -> ok
+  small tensor numel = 73,728: T_effective = 73,728, r = 1.000000000 -> ok
+  small tensor numel = 74,728: T_effective = 73,728, r = 1.000000000 -> ok
+  second fill without reseeding: predicted Philox offset 56: r = 1.000000000; offset 0: r = -0.0273 -> ok
+  large tensor (1,100,000,000 bfloat16 = 2.05 GiB): split-fill model r = 0.999999 / 0.999999 (first / second half), no-split model r = -0.0149 / +0.0112; predicted offsets [14920, 22380]
+[C+] PASS: large-tensor split-fill offsets (reviewer's derivation; informative, not part of stage C's verdict)
+[C] PASS: mechanism test with stock PyTorch on this GPU
+
+=== Stage D: NVIDIA device math vs correctly rounded math, and vs the public rows ===
+  D1 float32 ulp distance, GPU vs correctly rounded: 0: 4,000,000, 1: 0, 2: 0, 3-16: 0, 17-256: 0, >256: 0
+  D1 bf16 values (x 0.006) that differ: 0/4,000,000 = 0.000e+00 per value; share near sin/cos zeros: n/a (such values are 1.27% of all) -> NO_DEVIATION
+     reference, public weights vs correctly rounded math: V4-Flash 2.45e-4 (60% near zeros), V4-Pro 2.51e-4 (61%), V3 2.63e-4 (58%)
+  D2 stock PyTorch on this device, read out in T = 303,104 order: 147,416/147,456 public bf16 values reproduced bit for bit (correctly rounded math: 147,416)
+  D2 of the 40 values where correctly rounded math disagrees with the public weights, this GPU agrees with the public weights in 0 and with correctly rounded math in 40
+[D] FAIL: NVIDIA device math vs correctly rounded math, and vs the public rows - D2 (bit-for-bit reproduction of public rows by this GPU)
+
+=== Stage E: spoofing demo (clearly labelled) ===
+  wrote layout T = 303,104 in software (host memory only); the layout reader reports T = 303,104 (= 148 SMs x 2048), r = 1.000000; runner-up r = +0.0303; this device's native T is 73,728
+  wrote layout T = 311,296 in software (host memory only); the layout reader reports T = 311,296 (= 152 SMs x 2048), r = 1.000000; runner-up r = +0.0288; this device's native T is 73,728
+[E] PASS: spoofing demo (clearly labelled)
+
+=== Summary ===
+  A:PASS  B:SKIPPED  C:PASS  D:FAIL  E:PASS   [SIMULATED DEVICE - not a hardware result]
+  results written to results_simulated.json

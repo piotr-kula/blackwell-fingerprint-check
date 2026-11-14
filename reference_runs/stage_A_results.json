@@ -1,0 +1,124 @@
+{
+ "kit_version": "1.0",
+ "started_utc": "2026-11-14T01:41:57+00:00",
+ "argv": [
+  "--stages",
+  "A",
+  "--out",
+  "results.json"
+ ],
+ "simulated_device": false,
+ "stages": {
+  "A": {
+   "checks": {
+    "philox_known_answers": {
+     "vectors": 3,
+     "pass": true
+    },
+    "layout_and_seed": [
+     {
+      "config": "claimed: seed 953049583, T=303,104 (148 SMs x 2048)",
+      "T": 303104,
+      "seed": 953049583,
+      "expected_to_match": true,
+      "rows_r_gt_0.99": 36,
+      "median_r": 0.9999986328577513,
+      "min_r": 0.9999985581566955,
+      "max_abs_r": 0.9999986896621187,
+      "pass": true
+     },
+     {
+      "config": "T=270,336 (132 x 2048)",
+      "T": 270336,
+      "seed": 953049583,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": -0.008619884428303526,
+      "min_r": -0.04443458666218679,
+      "max_abs_r": 0.04443458666218679,
+      "pass": true
+     },
+     {
+      "config": "T=311,296 (152 x 2048)",
+      "T": 311296,
+      "seed": 953049583,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": 0.000165724302505921,
+      "min_r": -0.02521187544910229,
+      "max_abs_r": 0.027030626962669193,
+      "pass": true
+     },
+     {
+      "config": "seed+1",
+      "T": 303104,
+      "seed": 953049584,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": 0.001199164166822792,
+      "min_r": -0.028251521105250876,
+      "max_abs_r": 0.03305537238874779,
+      "pass": true
+     },
+     {
+      "config": "seed-1",
+      "T": 303104,
+      "seed": 953049582,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": -0.002534427865505998,
+      "min_r": -0.03692774803875155,
+      "max_abs_r": 0.03692774803875155,
+      "pass": true
+     }
+    ],
+    "bf16_bit_agreement_with_correctly_rounded_math": {
+     "values": 147456,
+     "identical": 147416,
+     "differing": 40,
+     "fraction_identical": 0.9997287326388888,
+     "pass": true,
+     "note": "the few differing values are where real GPU float32 math is not correctly rounded; stage D tests this"
+    }
+   },
+   "sample": {
+    "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash",
+    "revision": "60d8d70770c6776ff598c94bb586a859a38244f1",
+    "file": "model-00001-of-00046.safetensors",
+    "tensor": "embed.weight",
+    "rows": 36,
+    "row_width": 4096,
+    "sha256": "4fd08184ba6792f2969def91d15aec5a0d417df7498cc8fa09a30dd4605f14d8",
+    "byte_ranges_inclusive": [
+     {
+      "rows": [
+       128982,
+       128999
+      ],
+      "bytes": [
+       1056620640,
+       1056768095
+      ]
+     },
+     {
+      "rows": [
+       129056,
+       129073
+      ],
+      "bytes": [
+       1057226848,
+       1057374303
+      ]
+     }
+    ]
+   },
+   "status": "PASS",
+   "seconds": 0.14
+  }
+ },
+ "summary": {
+  "A": "PASS"
+ },
+ "finished_utc": "2026-11-14T01:41:57+00:00",
+ "gpu_stages_ran": false
+}

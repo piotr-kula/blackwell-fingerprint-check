@@ -1,0 +1,76 @@
+
+=== Stage F (optional): blind recovery of seed and thread count from the bundled rows ===
+  input: 36 bundled rows x 4096; scale estimated from the data: sigma = 0.00598371
+  probe: 32 largest-magnitude values of the first 4 rows; held-out for confirmation: the other 32 rows (131,072 values)
+  candidate thread counts: 270,336, 303,104, 311,296, 221,184, 294,912
+  seeds 0 .. 4,294,967,295 (4,294,967,296 seeds x 5 layouts), generator offset 0 only; backend torch on cpu, batch 1,048,576
+  progress   1.76%  next seed 75,497,472     37.29 M seed-layouts/s  ETA 0:09:25  matched 1st probe value: 1,421  matched all 32: 0
+  progress   3.27%  next seed 140,509,184     34.88 M seed-layouts/s  ETA 0:09:55  matched 1st probe value: 2,623  matched all 32: 0
+  progress   4.79%  next seed 205,520,896     34.07 M seed-layouts/s  ETA 0:10:00  matched 1st probe value: 3,792  matched all 32: 0
+  progress   6.35%  next seed 272,629,760     33.74 M seed-layouts/s  ETA 0:09:56  matched 1st probe value: 4,989  matched all 32: 0
+  progress   7.98%  next seed 342,884,352     33.97 M seed-layouts/s  ETA 0:09:41  matched 1st probe value: 6,216  matched all 32: 0
+  progress   9.64%  next seed 414,187,520     34.23 M seed-layouts/s  ETA 0:09:26  matched 1st probe value: 7,501  matched all 32: 0
+  progress  11.28%  next seed 484,442,112     34.31 M seed-layouts/s  ETA 0:09:15  matched 1st probe value: 8,845  matched all 32: 0
+  progress  12.94%  next seed 555,745,280     34.46 M seed-layouts/s  ETA 0:09:02  matched 1st probe value: 10,130  matched all 32: 0
+  progress  14.60%  next seed 627,048,448     34.56 M seed-layouts/s  ETA 0:08:50  matched 1st probe value: 11,487  matched all 32: 0
+  progress  16.16%  next seed 694,157,312     34.41 M seed-layouts/s  ETA 0:08:43  matched 1st probe value: 12,749  matched all 32: 0
+  progress  17.68%  next seed 759,169,024     34.23 M seed-layouts/s  ETA 0:08:36  matched 1st probe value: 13,903  matched all 32: 0
+  progress  19.36%  next seed 831,520,768     34.36 M seed-layouts/s  ETA 0:08:23  matched 1st probe value: 15,267  matched all 32: 0
+  progress  21.07%  next seed 904,921,088     34.52 M seed-layouts/s  ETA 0:08:11  matched 1st probe value: 16,597  matched all 32: 0
+  >>> seed 953,049,583 at T = 303,104 matches all 32 probe values (confirmation on held-out rows follows at the end)
+  progress  22.73%  next seed 976,224,256     34.59 M seed-layouts/s  ETA 0:07:59  matched 1st probe value: 17,901  matched all 32: 1
+  progress  24.37%  next seed 1,046,478,848     34.60 M seed-layouts/s  ETA 0:07:49  matched 1st probe value: 19,176  matched all 32: 1
+  progress  25.90%  next seed 1,112,539,136     34.49 M seed-layouts/s  ETA 0:07:41  matched 1st probe value: 20,430  matched all 32: 1
+  progress  27.49%  next seed 1,180,696,576     34.45 M seed-layouts/s  ETA 0:07:32  matched 1st probe value: 21,751  matched all 32: 1
+  progress  29.08%  next seed 1,248,854,016     34.40 M seed-layouts/s  ETA 0:07:22  matched 1st probe value: 22,976  matched all 32: 1
+  progress  30.64%  next seed 1,315,962,880     34.35 M seed-layouts/s  ETA 0:07:13  matched 1st probe value: 24,166  matched all 32: 1
+  progress  32.20%  next seed 1,383,071,744     34.29 M seed-layouts/s  ETA 0:07:04  matched 1st probe value: 25,476  matched all 32: 1
+  progress  33.76%  next seed 1,450,180,608     34.24 M seed-layouts/s  ETA 0:06:55  matched 1st probe value: 26,715  matched all 32: 1
+  progress  35.33%  next seed 1,517,289,472     34.20 M seed-layouts/s  ETA 0:06:46  matched 1st probe value: 27,965  matched all 32: 1
+  progress  36.91%  next seed 1,585,446,912     34.18 M seed-layouts/s  ETA 0:06:36  matched 1st probe value: 29,174  matched all 32: 1
+  progress  38.48%  next seed 1,652,555,776     34.15 M seed-layouts/s  ETA 0:06:26  matched 1st probe value: 30,485  matched all 32: 1
+  progress  40.06%  next seed 1,720,713,216     34.13 M seed-layouts/s  ETA 0:06:17  matched 1st probe value: 31,751  matched all 32: 1
+  progress  41.65%  next seed 1,788,870,656     34.12 M seed-layouts/s  ETA 0:06:07  matched 1st probe value: 32,954  matched all 32: 1
+  progress  43.24%  next seed 1,857,028,096     34.12 M seed-layouts/s  ETA 0:05:57  matched 1st probe value: 34,217  matched all 32: 1
+  progress  44.82%  next seed 1,925,185,536     34.11 M seed-layouts/s  ETA 0:05:47  matched 1st probe value: 35,478  matched all 32: 1
+  progress  46.41%  next seed 1,993,342,976     34.11 M seed-layouts/s  ETA 0:05:37  matched 1st probe value: 36,720  matched all 32: 1
+  progress  47.97%  next seed 2,060,451,840     34.08 M seed-layouts/s  ETA 0:05:27  matched 1st probe value: 37,973  matched all 32: 1
+  progress  49.54%  next seed 2,127,560,704     34.06 M seed-layouts/s  ETA 0:05:18  matched 1st probe value: 39,238  matched all 32: 1
+  progress  51.10%  next seed 2,194,669,568     34.04 M seed-layouts/s  ETA 0:05:08  matched 1st probe value: 40,484  matched all 32: 1
+  progress  52.69%  next seed 2,262,827,008     34.04 M seed-layouts/s  ETA 0:04:58  matched 1st probe value: 41,804  matched all 32: 1
+  progress  54.25%  next seed 2,329,935,872     34.03 M seed-layouts/s  ETA 0:04:48  matched 1st probe value: 43,023  matched all 32: 1
+  progress  55.83%  next seed 2,398,093,312     34.02 M seed-layouts/s  ETA 0:04:38  matched 1st probe value: 44,266  matched all 32: 1
+  progress  57.40%  next seed 2,465,202,176     34.00 M seed-layouts/s  ETA 0:04:29  matched 1st probe value: 45,495  matched all 32: 1
+  progress  58.98%  next seed 2,533,359,616     33.99 M seed-layouts/s  ETA 0:04:19  matched 1st probe value: 46,779  matched all 32: 1
+  progress  60.60%  next seed 2,602,565,632     33.99 M seed-layouts/s  ETA 0:04:08  matched 1st probe value: 48,044  matched all 32: 1
+  progress  62.23%  next seed 2,672,820,224     34.02 M seed-layouts/s  ETA 0:03:58  matched 1st probe value: 49,282  matched all 32: 1
+  progress  63.92%  next seed 2,745,171,968     34.07 M seed-layouts/s  ETA 0:03:47  matched 1st probe value: 50,615  matched all 32: 1
+  progress  65.60%  next seed 2,817,523,712     34.11 M seed-layouts/s  ETA 0:03:36  matched 1st probe value: 51,928  matched all 32: 1
+  progress  67.26%  next seed 2,888,826,880     34.14 M seed-layouts/s  ETA 0:03:25  matched 1st probe value: 53,243  matched all 32: 1
+  progress  68.82%  next seed 2,955,935,744     34.13 M seed-layouts/s  ETA 0:03:16  matched 1st probe value: 54,462  matched all 32: 1
+  progress  70.51%  next seed 3,028,287,488     34.17 M seed-layouts/s  ETA 0:03:05  matched 1st probe value: 55,828  matched all 32: 1
+  progress  72.17%  next seed 3,099,590,656     34.20 M seed-layouts/s  ETA 0:02:54  matched 1st probe value: 57,103  matched all 32: 1
+  progress  73.85%  next seed 3,171,942,400     34.24 M seed-layouts/s  ETA 0:02:44  matched 1st probe value: 58,400  matched all 32: 1
+  progress  75.46%  next seed 3,241,148,416     34.24 M seed-layouts/s  ETA 0:02:33  matched 1st probe value: 59,706  matched all 32: 1
+  progress  77.12%  next seed 3,312,451,584     34.27 M seed-layouts/s  ETA 0:02:23  matched 1st probe value: 61,027  matched all 32: 1
+  progress  78.78%  next seed 3,383,754,752     34.29 M seed-layouts/s  ETA 0:02:12  matched 1st probe value: 62,374  matched all 32: 1
+  progress  80.35%  next seed 3,450,863,616     34.27 M seed-layouts/s  ETA 0:02:03  matched 1st probe value: 63,619  matched all 32: 1
+  progress  81.88%  next seed 3,516,923,904     34.24 M seed-layouts/s  ETA 0:01:53  matched 1st probe value: 64,834  matched all 32: 1
+  progress  83.42%  next seed 3,582,984,192     34.21 M seed-layouts/s  ETA 0:01:44  matched 1st probe value: 66,031  matched all 32: 1
+  progress  85.03%  next seed 3,652,190,208     34.22 M seed-layouts/s  ETA 0:01:33  matched 1st probe value: 67,247  matched all 32: 1
+  progress  86.60%  next seed 3,719,299,072     34.20 M seed-layouts/s  ETA 0:01:24  matched 1st probe value: 68,440  matched all 32: 1
+  progress  88.16%  next seed 3,786,407,936     34.18 M seed-layouts/s  ETA 0:01:14  matched 1st probe value: 69,672  matched all 32: 1
+  progress  89.75%  next seed 3,854,565,376     34.18 M seed-layouts/s  ETA 0:01:04  matched 1st probe value: 71,008  matched all 32: 1
+  progress  91.28%  next seed 3,920,625,664     34.15 M seed-layouts/s  ETA 0:00:54  matched 1st probe value: 72,286  matched all 32: 1
+  progress  92.85%  next seed 3,987,734,528     34.14 M seed-layouts/s  ETA 0:00:45  matched 1st probe value: 73,507  matched all 32: 1
+  progress  94.41%  next seed 4,054,843,392     34.13 M seed-layouts/s  ETA 0:00:35  matched 1st probe value: 74,709  matched all 32: 1
+  progress  95.97%  next seed 4,121,952,256     34.11 M seed-layouts/s  ETA 0:00:25  matched 1st probe value: 75,961  matched all 32: 1
+  progress  97.53%  next seed 4,189,061,120     34.10 M seed-layouts/s  ETA 0:00:15  matched 1st probe value: 77,205  matched all 32: 1
+  progress  99.12%  next seed 4,257,218,560     34.09 M seed-layouts/s  ETA 0:00:05  matched 1st probe value: 78,506  matched all 32: 1
+  progress 100.00%  next seed 4,294,967,296     34.08 M seed-layouts/s  ETA 0:00:00  matched 1st probe value: 79,236  matched all 32: 1
+  RECOVERED seed = 953,049,583, T = 303,104 (= 148 SMs x 2048): held-out r = 0.999999 on 131,072 values not used by the search; equals the published claim: True
+  runner-up: seed 3,778,939,901 at T = 294,912 passed 2 of 32 probe values, probe cosine +0.262, held-out r = -0.00461
+  throughput this run: 34.08 million seed-layout evaluations per second on torch/cpu (4,294,967,296 seeds x 5 layouts in 630.1 s)
+  at this rate a full 2**32 sweep of 5 layouts takes about 0:10:30 (h:mm:ss)
+[F] PASS: blind seed recovery
+  results written to t_blind_full_cpu.json

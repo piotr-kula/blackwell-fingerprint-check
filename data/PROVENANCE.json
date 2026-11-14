@@ -1,0 +1,97 @@
+{
+ "description": "Rows of the token-embedding matrix of DeepSeek-V4-Flash, raw little-endian uint16 (bfloat16 bit patterns), rows concatenated in the order listed.",
+ "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash",
+ "revision": "60d8d70770c6776ff598c94bb586a859a38244f1",
+ "file": "model-00001-of-00046.safetensors",
+ "tensor": "embed.weight",
+ "tensor_dtype": "BF16",
+ "tensor_shape": [
+  129280,
+  4096
+ ],
+ "safetensors_header_bytes": 88,
+ "tensor_data_start_byte": 96,
+ "row_ranges_inclusive": [
+  [
+   128982,
+   128999
+  ],
+  [
+   129056,
+   129073
+  ]
+ ],
+ "byte_ranges_inclusive": [
+  {
+   "rows": [
+    128982,
+    128999
+   ],
+   "bytes": [
+    1056620640,
+    1056768095
+   ]
+  },
+  {
+   "rows": [
+    129056,
+    129073
+   ],
+   "bytes": [
+    1057226848,
+    1057374303
+   ]
+  }
+ ],
+ "rows": [
+  128982,
+  128983,
+  128984,
+  128985,
+  128986,
+  128987,
+  128988,
+  128989,
+  128990,
+  128991,
+  128992,
+  128993,
+  128994,
+  128995,
+  128996,
+  128997,
+  128998,
+  128999,
+  129056,
+  129057,
+  129058,
+  129059,
+  129060,
+  129061,
+  129062,
+  129063,
+  129064,
+  129065,
+  129066,
+  129067,
+  129068,
+  129069,
+  129070,
+  129071,
+  129072,
+  129073
+ ],
+ "row_width": 4096,
+ "bytes": 294912,
+ "sha256": "4fd08184ba6792f2969def91d15aec5a0d417df7498cc8fa09a30dd4605f14d8",
+ "fetched_utc": "2026-11-14T01:17:01.662Z",
+ "license": "MIT (Copyright (c) 2023 DeepSeek) - see LICENSE-DeepSeek.txt in this folder",
+ "reviewer_check": {
+  "seed": 953049583,
+  "threads": 303104,
+  "std": 0.006,
+  "mismatching_bf16_values_vs_correctly_rounded_math": 40,
+  "values": 147456,
+  "worst_row": 3
+ }
+}

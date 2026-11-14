@@ -1,0 +1,15 @@
+
+=== Stage A: CPU self-test (no GPU involved) ===
+  Philox4x32-10 known-answer vectors (Random123): ok
+  row sample: 36 rows x 4096 of embed.weight from https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash @ 60d8d70770 (sha256 ok)
+  claimed: seed 953049583, T=303,104 (148 SMs x 2048)  rows r>0.99: 36/36  median r +0.999999  -> ok
+  T=270,336 (132 x 2048)                               rows r>0.99:  0/36  median r -0.008620  -> ok
+  T=311,296 (152 x 2048)                               rows r>0.99:  0/36  median r +0.000166  -> ok
+  seed+1                                               rows r>0.99:  0/36  median r +0.001199  -> ok
+  seed-1                                               rows r>0.99:  0/36  median r -0.002534  -> ok
+  bf16 bit agreement with correctly rounded math: 147416/147456 (99.9729%), 40 differing -> ok
+[A] PASS: CPU self-test (no GPU involved)
+
+=== Summary ===
+  A:PASS
+  results written to results.json

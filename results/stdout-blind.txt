@@ -1,0 +1,40 @@
+
+=== Stage F (optional): blind recovery of seed and thread count from the bundled rows ===
+  torch 2.14.1+cu130 (CUDA build 13.0), NVIDIA GB10, compute capability 12.1, 48 SMs, max threads per SM: 1536
+  PyTorch formula predicts T = 48 x (1536 // 256) x 256 = 73,728
+  input: 36 bundled rows x 4096; scale estimated from the data: sigma = 0.00598371
+  probe: 32 largest-magnitude values of the first 4 rows; held-out for confirmation: the other 32 rows (131,072 values)
+  candidate thread counts: 270,336, 303,104, 311,296, 221,184, 294,912, 73,728 (native T of this device: 73,728)
+  seeds 0 .. 4,294,967,295 (4,294,967,296 seeds x 6 layouts), generator offset 0 only; backend torch on cuda, batch 16,777,216
+  progress   4.30%  next seed 184,549,376    102.59 M seed-layouts/s  ETA 0:04:00  matched 1st probe value: 4,083  matched all 32: 0
+  progress   8.59%  next seed 369,098,752    102.88 M seed-layouts/s  ETA 0:03:48  matched 1st probe value: 8,110  matched all 32: 0
+  progress  12.89%  next seed 553,648,128    102.94 M seed-layouts/s  ETA 0:03:38  matched 1st probe value: 12,201  matched all 32: 0
+  progress  17.19%  next seed 738,197,504    102.98 M seed-layouts/s  ETA 0:03:27  matched 1st probe value: 16,327  matched all 32: 0
+  progress  21.48%  next seed 922,746,880    103.00 M seed-layouts/s  ETA 0:03:16  matched 1st probe value: 20,352  matched all 32: 0
+  >>> seed 953,049,583 at T = 303,104 matches all 32 probe values (confirmation on held-out rows follows at the end)
+  progress  25.78%  next seed 1,107,296,256    102.97 M seed-layouts/s  ETA 0:03:05  matched 1st probe value: 24,425  matched all 32: 1
+  progress  30.08%  next seed 1,291,845,632    102.98 M seed-layouts/s  ETA 0:02:54  matched 1st probe value: 28,528  matched all 32: 1
+  progress  34.38%  next seed 1,476,395,008    102.97 M seed-layouts/s  ETA 0:02:44  matched 1st probe value: 32,651  matched all 32: 1
+  progress  38.67%  next seed 1,660,944,384    102.97 M seed-layouts/s  ETA 0:02:33  matched 1st probe value: 36,751  matched all 32: 1
+  progress  42.97%  next seed 1,845,493,760    102.97 M seed-layouts/s  ETA 0:02:22  matched 1st probe value: 40,825  matched all 32: 1
+  progress  47.27%  next seed 2,030,043,136    102.97 M seed-layouts/s  ETA 0:02:11  matched 1st probe value: 44,925  matched all 32: 1
+  progress  51.56%  next seed 2,214,592,512    102.96 M seed-layouts/s  ETA 0:02:01  matched 1st probe value: 49,082  matched all 32: 1
+  progress  55.86%  next seed 2,399,141,888    102.95 M seed-layouts/s  ETA 0:01:50  matched 1st probe value: 53,226  matched all 32: 1
+  progress  60.16%  next seed 2,583,691,264    102.93 M seed-layouts/s  ETA 0:01:39  matched 1st probe value: 57,350  matched all 32: 1
+  progress  64.45%  next seed 2,768,240,640    102.92 M seed-layouts/s  ETA 0:01:29  matched 1st probe value: 61,351  matched all 32: 1
+  progress  68.75%  next seed 2,952,790,016    102.91 M seed-layouts/s  ETA 0:01:18  matched 1st probe value: 65,406  matched all 32: 1
+  progress  73.05%  next seed 3,137,339,392    102.90 M seed-layouts/s  ETA 0:01:07  matched 1st probe value: 69,491  matched all 32: 1
+  progress  77.34%  next seed 3,321,888,768    102.89 M seed-layouts/s  ETA 0:00:56  matched 1st probe value: 73,601  matched all 32: 1
+  progress  81.64%  next seed 3,506,438,144    102.88 M seed-layouts/s  ETA 0:00:45  matched 1st probe value: 77,759  matched all 32: 1
+  progress  85.94%  next seed 3,690,987,520    102.87 M seed-layouts/s  ETA 0:00:35  matched 1st probe value: 81,712  matched all 32: 1
+  progress  90.23%  next seed 3,875,536,896    102.86 M seed-layouts/s  ETA 0:00:24  matched 1st probe value: 85,889  matched all 32: 1
+  progress  94.53%  next seed 4,060,086,272    102.85 M seed-layouts/s  ETA 0:00:13  matched 1st probe value: 89,982  matched all 32: 1
+  progress  98.83%  next seed 4,244,635,648    102.84 M seed-layouts/s  ETA 0:00:02  matched 1st probe value: 94,161  matched all 32: 1
+  progress 100.00%  next seed 4,294,967,296    102.84 M seed-layouts/s  ETA 0:00:00  matched 1st probe value: 95,329  matched all 32: 1
+  RECOVERED seed = 953,049,583, T = 303,104 (= 148 SMs x 2048): held-out r = 0.999999 on 131,072 values not used by the search; equals the published claim: True
+  runner-up: seed 3,778,939,901 at T = 294,912 passed 2 of 32 probe values, probe cosine +0.244, held-out r = -0.00461
+  throughput this run: 102.84 million seed-layout evaluations per second on torch/cuda (4,294,967,296 seeds x 6 layouts in 250.6 s)
+  at this rate a full 2**32 sweep of 6 layouts takes about 0:04:10 (h:mm:ss)
+[F] PASS: blind seed recovery
+  results written to results_blind.json
+exit code: 0

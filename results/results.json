@@ -1,0 +1,422 @@
+{
+ "kit_version": "1.0",
+ "started_utc": "2026-11-14T16:19:03+00:00",
+ "argv": [],
+ "simulated_device": false,
+ "stages": {
+  "A": {
+   "checks": {
+    "philox_known_answers": {
+     "vectors": 3,
+     "pass": true
+    },
+    "layout_and_seed": [
+     {
+      "config": "claimed: seed 953049583, T=303,104 (148 SMs x 2048)",
+      "T": 303104,
+      "seed": 953049583,
+      "expected_to_match": true,
+      "rows_r_gt_0.99": 36,
+      "median_r": 0.9999986328577467,
+      "min_r": 0.9999985581566829,
+      "max_abs_r": 0.9999986896621241,
+      "pass": true
+     },
+     {
+      "config": "T=270,336 (132 x 2048)",
+      "T": 270336,
+      "seed": 953049583,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": -0.008619884428303535,
+      "min_r": -0.0444345866621866,
+      "max_abs_r": 0.0444345866621866,
+      "pass": true
+     },
+     {
+      "config": "T=311,296 (152 x 2048)",
+      "T": 311296,
+      "seed": 953049583,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": 0.00016572430250591104,
+      "min_r": -0.025211875449102382,
+      "max_abs_r": 0.027030626962669273,
+      "pass": true
+     },
+     {
+      "config": "seed+1",
+      "T": 303104,
+      "seed": 953049584,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": 0.0011991641668227969,
+      "min_r": -0.028251521105250744,
+      "max_abs_r": 0.03305537238874792,
+      "pass": true
+     },
+     {
+      "config": "seed-1",
+      "T": 303104,
+      "seed": 953049582,
+      "expected_to_match": false,
+      "rows_r_gt_0.99": 0,
+      "median_r": -0.002534427865506025,
+      "min_r": -0.03692774803875133,
+      "max_abs_r": 0.03692774803875133,
+      "pass": true
+     }
+    ],
+    "bf16_bit_agreement_with_correctly_rounded_math": {
+     "values": 147456,
+     "identical": 147416,
+     "differing": 40,
+     "fraction_identical": 0.9997287326388888,
+     "pass": true,
+     "note": "the few differing values are where real GPU float32 math is not correctly rounded; stage D tests this"
+    }
+   },
+   "sample": {
+    "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash",
+    "revision": "60d8d70770c6776ff598c94bb586a859a38244f1",
+    "file": "model-00001-of-00046.safetensors",
+    "tensor": "embed.weight",
+    "rows": 36,
+    "row_width": 4096,
+    "sha256": "4fd08184ba6792f2969def91d15aec5a0d417df7498cc8fa09a30dd4605f14d8",
+    "byte_ranges_inclusive": [
+     {
+      "rows": [
+       128982,
+       128999
+      ],
+      "bytes": [
+       1056620640,
+       1056768095
+      ]
+     },
+     {
+      "rows": [
+       129056,
+       129073
+      ],
+      "bytes": [
+       1057226848,
+       1057374303
+      ]
+     }
+    ]
+   },
+   "status": "PASS",
+   "seconds": 0.08
+  },
+  "B": {
+   "python": "3.12.3",
+   "numpy": "2.5.4",
+   "machine": "aarch64",
+   "platform": "Linux-7.0.0-1025-nvidia-aarch64-with-glibc2.39",
+   "torch": "2.14.1+cu130",
+   "torch_cuda_build": "13.0",
+   "cuda_available": true,
+   "arch_list": [
+    "sm_80",
+    "sm_90",
+    "sm_100",
+    "sm_110",
+    "sm_120"
+   ],
+   "device_count": 1,
+   "device_index": 0,
+   "device_name": "NVIDIA GB10",
+   "compute_capability": "12.1",
+   "multi_processor_count": 48,
+   "max_threads_per_multi_processor": 1536,
+   "warp_size": 32,
+   "is_integrated": true,
+   "total_memory_bytes": 130661003264,
+   "how_obtained": "torch.cuda.get_device_properties(0); max threads per SM is read from the max_threads_per_multi_processor attribute when this torch build exposes it, otherwise it is inferred in stage C as T_found / (256 * multi_processor_count)",
+   "warnings": [],
+   "predicted_full_grid_threads": 73728,
+   "formula": "grid.x = min(multiProcessorCount * (maxThreadsPerMultiProcessor / 256), ceil(numel / 256)); block = 256; T = 256 * grid.x; element i is written by thread i % T (Philox subsequence = thread index), lane (i // T) % 4 of curand_normal4 call number (i // T) // 4 (Philox counter = generator_offset/4 + call)",
+   "formula_source": "pytorch/pytorch aten/src/ATen/native/cuda/DistributionTemplates.h, calc_execution_policy() and distribution_elementwise_grid_stride_kernel(); read at main 0a95a45a42fbec1ab15a5c8ad9b6f03ac2e225ef (2026-11-12); same grid formula in v1.3.0, v1.8.0, v2.0.0, v2.5.0, v2.9.0",
+   "status": "PASS",
+   "seconds": 0.0
+  },
+  "C": {
+   "seed": 20261113,
+   "numel": 4000000,
+   "formula": "grid.x = min(multiProcessorCount * (maxThreadsPerMultiProcessor / 256), ceil(numel / 256)); block = 256; T = 256 * grid.x; element i is written by thread i % T (Philox subsequence = thread index), lane (i // T) % 4 of curand_normal4 call number (i // T) // 4 (Philox counter = generator_offset/4 + call)",
+   "formula_source": "pytorch/pytorch aten/src/ATen/native/cuda/DistributionTemplates.h, calc_execution_policy() and distribution_elementwise_grid_stride_kernel(); read at main 0a95a45a42fbec1ab15a5c8ad9b6f03ac2e225ef (2026-11-12); same grid formula in v1.3.0, v1.8.0, v2.0.0, v2.5.0, v2.9.0",
+   "checks": {
+    "sweep": {
+     "grid_sizes_swept": [
+      1,
+      2600
+     ],
+     "sample_positions": 16343,
+     "best_T": 73728,
+     "best_grid_blocks": 288,
+     "best_r": 0.9999999999999687,
+     "runner_up_T": 210688,
+     "runner_up_r": 0.023774610804429244,
+     "pass": true
+    },
+    "formula": {
+     "multi_processor_count": 48,
+     "max_threads_per_multi_processor_reported": 1536,
+     "blocks_per_sm_implied": 6.0,
+     "T_predicted": 73728,
+     "pass": true
+    },
+    "float32_bit_agreement": [
+     {
+      "fma_contracted_v": true,
+      "values": 4000000,
+      "bit_identical": 776708,
+      "within_1_ulp": 1726615,
+      "within_2_ulp": 2273085,
+      "fraction_bit_identical": 0.194177,
+      "pearson_r": 0.9999999999999685
+     },
+     {
+      "fma_contracted_v": false,
+      "values": 4000000,
+      "bit_identical": 776887,
+      "within_1_ulp": 1726969,
+      "within_2_ulp": 2273544,
+      "fraction_bit_identical": 0.19422175,
+      "pearson_r": 0.9999999999999701
+     }
+    ],
+    "float32_overall": {
+     "pass": true,
+     "note": "pass criterion is r > 0.999999; bit-identical fraction is reported, not gated (stage D)"
+    },
+    "native_vs_datacentre_layouts": [
+     {
+      "layout": "132 SMs x 2048",
+      "T": 270336,
+      "r": -0.009056015121468832,
+      "is_this_device": false,
+      "pass": true
+     },
+     {
+      "layout": "148 SMs x 2048",
+      "T": 303104,
+      "r": -0.0009622719045113127,
+      "is_this_device": false,
+      "pass": true
+     },
+     {
+      "layout": "152 SMs x 2048",
+      "T": 311296,
+      "r": -0.0015447384163099938,
+      "is_this_device": false,
+      "pass": true
+     }
+    ],
+    "other_dtypes": [
+     {
+      "dtype": "bfloat16",
+      "identical_to_own_float32_fill_rounded": 1.0,
+      "identical_to_emulator_at_samples": 0.9999388117236737,
+      "pass": true
+     },
+     {
+      "dtype": "float16",
+      "identical_to_own_float32_fill_rounded": 1.0,
+      "identical_to_emulator_at_samples": 0.9985926696444961,
+      "pass": true
+     }
+    ],
+    "std_scaling": {
+     "std": 0.006,
+     "identical_to_float32(std1_value * float32(std))": 1.0,
+     "pass": true
+    },
+    "two_dimensional": {
+     "shape": [
+      977,
+      4096
+     ],
+     "r_row_major": 0.999999999999971,
+     "pass": true
+    },
+    "small_tensors": [
+     {
+      "numel": 10000,
+      "T_effective": 10240,
+      "r": 0.9999999999999691,
+      "pass": true
+     },
+     {
+      "numel": 73728,
+      "T_effective": 73728,
+      "r": 0.9999999999999689,
+      "pass": true
+     },
+     {
+      "numel": 74728,
+      "T_effective": 73728,
+      "r": 0.9999999999999691,
+      "pass": true
+     }
+    ],
+    "offset_chaining": {
+     "first_numel": 4000000,
+     "second_numel": 1000000,
+     "predicted_offset_of_second_fill": 56,
+     "r_at_predicted_offset": 0.9999999999999691,
+     "r_at_offset_0": -0.027273882365484194,
+     "pass": true
+    }
+   },
+   "T_found": 73728,
+   "fma_variant_used": false,
+   "status": "PASS",
+   "large_tensor_split": {
+    "numel": 1100000000,
+    "dtype": "bfloat16",
+    "bytes": 2200000000,
+    "predicted_segments": [
+     [
+      0,
+      550000000,
+      14920,
+      73728
+     ],
+     [
+      550000000,
+      550000000,
+      22380,
+      73728
+     ]
+    ],
+    "r_first_half_split_model": 0.9999985975024526,
+    "r_second_half_split_model": 0.9999985671830796,
+    "r_first_half_no_split_model": -0.014884331016871125,
+    "r_second_half_no_split_model": 0.011227249478453225,
+    "status": "PASS"
+   },
+   "seconds": 3.46
+  },
+  "D": {
+   "T_device": 73728,
+   "reference_public_weights": {
+    "DeepSeek-V4-Flash (445 untouched rows)": {
+     "flips": 446,
+     "values": 1822720,
+     "near_zero_share": 0.601
+    },
+    "DeepSeek-V4-Pro (256 untouched rows)": {
+     "flips": 460,
+     "values": 1835008,
+     "near_zero_share": 0.613
+    },
+    "DeepSeek-V3 (256 untouched rows, lab-disclosed H800)": {
+     "flips": 482,
+     "values": 1835008,
+     "near_zero_share": 0.581
+    }
+   },
+   "D1_generic": {
+    "values": 4000000,
+    "float32_ulp_distance_histogram": {
+     "0": 776887,
+     "1": 950082,
+     "2": 546575,
+     "3-16": 1361450,
+     "17-256": 342647,
+     ">256": 22359
+    },
+    "fraction_float32_bit_identical": 0.19422175,
+    "near_zero_definition": "|sin v| < 0.02 (even lanes) or |cos v| < 0.02 (odd lanes)",
+    "near_zero_fraction_of_values": 0.0126625,
+    "by_class": {
+     "near_zero": {
+      "n": 50650,
+      "identical": 77,
+      "gt16": 48332,
+      "flips": 567
+     },
+     "other": {
+      "n": 3949350,
+      "identical": 776810,
+      "gt16": 316674,
+      "flips": 392
+     }
+    },
+    "bf16_flips_at_std_0.006": 959,
+    "bf16_flip_rate": 0.00023975,
+    "near_zero_share_of_flips": 0.5912408759124088,
+    "enrichment_of_flips_near_zero": 46.69227055576773,
+    "verdict": "CONSISTENT_WITH_PUBLIC_WEIGHTS"
+   },
+   "D2_public_rows": {
+    "sample": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash @ 60d8d70770 embed.weight rows [[128982, 128999], [129056, 129073]]",
+    "layout_of_public_rows": 303104,
+    "seed": 953049583,
+    "std": 0.006,
+    "tensor_generated_on_device": {
+     "numel": 128655360,
+     "dtype": "bfloat16"
+    },
+    "values_reachable_on_this_device": 147456,
+    "values_in_sample": 147456,
+    "gpu_identical_to_public": 147456,
+    "correctly_rounded_identical_to_public": 147416,
+    "discriminating_values": 40,
+    "discriminating_gpu_equals_public": 40,
+    "discriminating_gpu_equals_correctly_rounded": 0,
+    "fraction_gpu_identical_to_public": 1.0,
+    "status": "PASS"
+   },
+   "status": "PASS",
+   "basis": "D2 (bit-for-bit reproduction of public rows by this GPU)",
+   "seconds": 0.34
+  },
+  "E": {
+   "label": "DEMONSTRATION ONLY. It shows that the layout is whatever the software writes. It does not show that anyone did this, and it says nothing about which hardware any published model was made on.",
+   "demo_seed": 424242,
+   "shape": [
+    512,
+    4096
+   ],
+   "std": 0.02,
+   "native_T_of_this_device": 73728,
+   "device": "NVIDIA GB10",
+   "device_sm_count": 48,
+   "runs": [
+    {
+     "layout_written": 303104,
+     "layout_read_back": 303104,
+     "r": 0.9999999999999997,
+     "runner_up_T": 76032,
+     "runner_up_r": 0.030288015395278638,
+     "tensor": "stored on and read back from NVIDIA GB10 (48 SMs)",
+     "pass": true
+    },
+    {
+     "layout_written": 311296,
+     "layout_read_back": 311296,
+     "r": 0.9999999999999994,
+     "runner_up_T": 355072,
+     "runner_up_r": 0.028759565422560186,
+     "tensor": "stored on and read back from NVIDIA GB10 (48 SMs)",
+     "pass": true
+    }
+   ],
+   "status": "PASS",
+   "seconds": 5.07
+  }
+ },
+ "summary": {
+  "A": "PASS",
+  "B": "PASS",
+  "C": "PASS",
+  "D": "PASS",
+  "E": "PASS"
+ },
+ "finished_utc": "2026-11-14T16:19:13+00:00",
+ "gpu_stages_ran": true
+}

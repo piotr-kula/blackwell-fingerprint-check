@@ -9,6 +9,25 @@ weights, and instructions for the agent that runs it.
 It needs Python 3 with numpy, and PyTorch with CUDA for the GPU stages. It does not use the
 network, does not need a Hugging Face token, and writes only inside this folder.
 
+## Results so far
+
+Raw output for each run is under `results/`.
+
+| Machine | GPU | SMs x threads per SM | Native T | Stages A to E | Blind seed search (F) |
+|---|---|---|---|---|---|
+| Rented cloud machine (`results/runpod-b200/`) | NVIDIA B200 | 148 x 2048 | 303,104 | all PASS | seed 953,049,583 at T = 303,104, the only hit, in 8.4 s |
+| Desktop PC (`results/ripple-rtx5090/`) | NVIDIA RTX 5090 | 170 x 1536 | 261,120 | all PASS | same seed and T, the only hit, in 40 s |
+| DGX Spark (`results/dgx-spark/`) | NVIDIA GB10 | 48 x 1536 | 73,728 | all PASS | same seed and T, the only hit, in 251 s |
+
+What this shows: a real B200 reports 148 SMs and natively produces the T = 303,104 layout, and all
+three GPUs, read out in that order, reproduce the bundled 147,456 values of DeepSeek-V4-Flash's
+public weights bit for bit, including the 40 values where correctly rounded math differs.
+
+What it does not show: anything about the other five models, the GB200 (the "152" reading has not
+been tested on hardware here), training as opposed to initialisation, where any chip was, or who
+used it. Stage E on every machine also wrote the "148" and "152" layouts in software, so a layout
+alone does not prove which hardware produced it.
+
 ## The claim, in layers
 
 The review split the claim into five steps. The kit only reaches the first two.

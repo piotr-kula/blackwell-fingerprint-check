@@ -1,0 +1,20 @@
+
+=== Stage F (optional): blind recovery of seed and thread count from the bundled rows ===
+  torch 2.15.0+cu132 (CUDA build 13.2), NVIDIA GeForce RTX 5090, compute capability 12.0, 170 SMs, max threads per SM: 1536
+  PyTorch formula predicts T = 170 x (1536 // 256) x 256 = 261,120
+  input: 36 bundled rows x 4096; scale estimated from the data: sigma = 0.00598371
+  probe: 32 largest-magnitude values of the first 4 rows; held-out for confirmation: the other 32 rows (131,072 values)
+  candidate thread counts: 270,336, 303,104, 311,296, 221,184, 294,912, 261,120 (native T of this device: 261,120)
+  seeds 0 .. 4,294,967,295 (4,294,967,296 seeds x 6 layouts), generator offset 0 only; backend torch on cuda, batch 16,777,216
+  >>> seed 953,049,583 at T = 303,104 matches all 32 probe values (confirmation on held-out rows follows at the end)
+  progress  24.61%  next seed 1,056,964,608    631.32 M seed-layouts/s  ETA 0:00:30  matched 1st probe value: 23,235  matched all 32: 1
+  progress  49.61%  next seed 2,130,706,432    636.44 M seed-layouts/s  ETA 0:00:20  matched 1st probe value: 47,135  matched all 32: 1
+  progress  74.61%  next seed 3,204,448,256    638.00 M seed-layouts/s  ETA 0:00:10  matched 1st probe value: 70,741  matched all 32: 1
+  progress  99.61%  next seed 4,278,190,080    638.84 M seed-layouts/s  ETA 0:00:00  matched 1st probe value: 94,549  matched all 32: 1
+  progress 100.00%  next seed 4,294,967,296    638.86 M seed-layouts/s  ETA 0:00:00  matched 1st probe value: 94,936  matched all 32: 1
+  RECOVERED seed = 953,049,583, T = 303,104 (= 148 SMs x 2048): held-out r = 0.999999 on 131,072 values not used by the search; equals the published claim: True
+  runner-up: seed 2,020,357,198 at T = 261,120 passed 2 of 32 probe values, probe cosine +0.104, held-out r = +0.00471
+  throughput this run: 638.85 million seed-layout evaluations per second on torch/cuda (4,294,967,296 seeds x 6 layouts in 40.3 s)
+  at this rate a full 2**32 sweep of 6 layouts takes about 0:00:40 (h:mm:ss)
+[F] PASS: blind seed recovery
+  results written to results_blind.json
